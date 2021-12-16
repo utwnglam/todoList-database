@@ -1,0 +1,43 @@
+package com.afs.todoList.controller;
+
+import com.afs.todoList.entity.TodoItem;
+import com.afs.todoList.repository.TodoListRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+public class TodoListControllerTest {
+  public static final String TODOLIST_URL_BASE = "/todos";
+  @Autowired
+  MockMvc mockMvc;
+  @Autowired
+  TodoListRepository todoListRepository;
+
+  @BeforeEach
+  void cleanRepository() {
+    todoListRepository.deleteAll();
+  }
+
+  @Test
+  public void should_get_all_todos_when_GET_given_todos() throws Exception {
+    TodoItem todoItem = new TodoItem("1", "Do Something", false);
+    todoListRepository.insert(todoItem);
+
+    mockMvc.perform(MockMvcRequestBuilders.get(TODOLIST_URL_BASE))
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$", hasSize(1)))
+      .andExpect(jsonPath("$[0].id").isString())
+      .andExpect(jsonPath("$[0].content").value("Do Something"))
+      .andExpect(jsonPath("$[0].done").value(false));
+  }
+}
