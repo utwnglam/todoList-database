@@ -1,8 +1,10 @@
 package com.afs.todoList.entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
+@Document
 public class TodoItem {
   @MongoId(FieldType.OBJECT_ID)
   private String id;
