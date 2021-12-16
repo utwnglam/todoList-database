@@ -1,6 +1,7 @@
 package com.afs.todoList.controller;
 
 import com.afs.todoList.entity.TodoItem;
+import com.afs.todoList.service.TodoListService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,11 +13,14 @@ import java.util.List;
 @CrossOrigin("https://localhost:3000/")
 @RequestMapping("/todos")
 public class TodoListController {
-  public TodoListController() {
+  private final TodoListService todoListService;
+
+  public TodoListController(TodoListService todoListService) {
+    this.todoListService = todoListService;
   }
 
   @GetMapping
   public List<TodoItem> getAllTodos() {
-    return null;
+    return todoListService.findAll();
   }
 }
