@@ -36,4 +36,9 @@ public class TodoListController {
   public TodoItem editTodo(@PathVariable String id, @RequestBody TodoItemRequest todoItemRequest) {
     return todoListService.edit(id, todoListMapper.toEntity(todoItemRequest));
   }
+
+  @DeleteMapping("/{id}")
+  public void deleteTodo(@PathVariable String id) {
+    todoListService.delete(id);
+  }
 }

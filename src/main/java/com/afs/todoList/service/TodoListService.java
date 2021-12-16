@@ -15,6 +15,11 @@ public class TodoListService {
     this.todoListRepository = todoListRepository;
   }
 
+  private TodoItem findById(String id) {
+    return todoListRepository.findById(id)
+      .orElseThrow(NoTodoFoundException::new);
+  }
+
   public List<TodoItem> findAll() {
     return todoListRepository.findAll();
   }
@@ -33,9 +38,8 @@ public class TodoListService {
     }
     return todoListRepository.save(todoItem);
   }
-
-  private TodoItem findById(String id) {
-    return todoListRepository.findById(id)
-      .orElseThrow(NoTodoFoundException::new);
+  
+  public void delete(String id) {
+    todoListRepository.delete(findById(id));
   }
 }
