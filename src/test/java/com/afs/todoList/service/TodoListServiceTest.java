@@ -47,4 +47,18 @@ public class TodoListServiceTest {
     assertEquals(todoItem.getContent(), actual.getContent());
     assertEquals(todoItem.getDone(), actual.getDone());
   }
+
+  @Test
+  public void should_create_todo_when_POST_given_new_todo() {
+    TodoItem todoItemInput = new TodoItem("1", "Do Something", null);
+    TodoItem todoItemReturned = new TodoItem("1", "Do Something", false);
+
+    given(mockTodoListRepository.insert(todoItemInput))
+      .willReturn(todoItemReturned);
+
+    TodoItem actual = todoListService.create(todoItemInput);
+
+    assertEquals(todoItemReturned.getContent(), actual.getContent());
+    assertEquals(todoItemReturned.getDone(), actual.getDone());
+  }
 }
