@@ -17,4 +17,8 @@ public class TodoListService {
   public List<TodoItem> findAll() {
     return todoListRepository.findAll();
   }
+
+  public TodoItem create(TodoItem todoItem) {
+    return todoListRepository.insert(todoItem);
+  }
 }

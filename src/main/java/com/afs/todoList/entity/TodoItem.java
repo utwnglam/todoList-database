@@ -9,12 +9,15 @@ public class TodoItem {
   @MongoId(FieldType.OBJECT_ID)
   private String id;
   private String content;
-  private boolean done;
+  private Boolean done;
 
-  public TodoItem(String id, String content, boolean done) {
+  public TodoItem(String id, String content, Boolean done) {
     this.id = id;
     this.content = content;
     this.done = done;
+  }
+
+  public TodoItem() {
   }
 
   public String getId() {
