@@ -31,7 +31,7 @@ public class TodoListControllerTest {
 
   @Test
   public void should_get_all_todos_when_GET_given_todos() throws Exception {
-    TodoItem todoItem = new TodoItem("1", "Do Something", false);
+    TodoItem todoItem = new TodoItem(null, "Do Something", false);
     todoListRepository.insert(todoItem);
 
     mockMvc.perform(MockMvcRequestBuilders.get(TODOLIST_URL_BASE))
@@ -58,7 +58,20 @@ public class TodoListControllerTest {
   }
 
   @Test
-  public void should_edit_todo_when_PUT_given_updated_todo() {
+  public void should_edit_todo_when_PUT_given_updated_todo() throws Exception {
+    TodoItem todoItem = new TodoItem(null, "Do Something", false);
+    todoListRepository.insert(todoItem);
 
+    String updatedTodoItemJson = "{\n" +
+      "        \"content\": \"Edited\",\n" +
+      "        \"done\": true\n" +
+      "    }";
+
+    mockMvc.perform(MockMvcRequestBuilders.put(TODOLIST_URL_BASE + "/" + todoItem.getId())
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(updatedTodoItemJson))
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$.content").value("Edited"))
+      .andExpect(jsonPath("$.done").value(true));
   }
 }

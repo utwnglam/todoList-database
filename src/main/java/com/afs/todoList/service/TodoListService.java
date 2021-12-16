@@ -25,6 +25,7 @@ public class TodoListService {
   }
 
   public TodoItem create(TodoItem todoItem) {
+    todoItem.setDone(false);
     return todoListRepository.insert(todoItem);
   }
 

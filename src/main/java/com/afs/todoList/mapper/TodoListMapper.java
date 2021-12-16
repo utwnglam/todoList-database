@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 public class TodoListMapper {
   public TodoItem toEntity(TodoItemRequest todoItemRequest) {
     TodoItem todoItem = new TodoItem();
-    todoItem.setDone(false);
 
     BeanUtils.copyProperties(todoItemRequest, todoItem);
     return todoItem;
