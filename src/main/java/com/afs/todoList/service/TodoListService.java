@@ -15,7 +15,7 @@ public class TodoListService {
     this.todoListRepository = todoListRepository;
   }
 
-  private TodoItem findById(String id) {
+  public TodoItem findById(String id) {
     return todoListRepository.findById(id)
       .orElseThrow(NoTodoFoundException::new);
   }

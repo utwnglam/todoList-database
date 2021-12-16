@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(SpringExtension.class)
@@ -33,5 +34,17 @@ public class TodoListServiceTest {
 
     assertEquals(todoItemList.get(0).getContent(), actual.get(0).getContent());
     assertEquals(todoItemList.get(0).getDone(), actual.get(0).getDone());
+  }
+
+  @Test
+  public void should_return_todo_when_GET_given_ID() {
+    TodoItem todoItem = new TodoItem("1", "Do Something", false);
+    given(mockTodoListRepository.findById(any()))
+      .willReturn(java.util.Optional.of(todoItem));
+
+    TodoItem actual = todoListService.findById(todoItem.getId());
+
+    assertEquals(todoItem.getContent(), actual.getContent());
+    assertEquals(todoItem.getDone(), actual.getDone());
   }
 }
