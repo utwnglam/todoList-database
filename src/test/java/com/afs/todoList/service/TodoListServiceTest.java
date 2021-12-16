@@ -61,4 +61,23 @@ public class TodoListServiceTest {
     assertEquals(todoItemReturned.getContent(), actual.getContent());
     assertEquals(todoItemReturned.getDone(), actual.getDone());
   }
+
+  @Test
+  public void should_edit_todo_when_PUT_given_updated_todo() {
+    TodoItem todoItem = new TodoItem("1", "Do Something", true);
+    TodoItem todoItemUpdated = new TodoItem("1", "Do Something and tired", false);
+
+    given(mockTodoListRepository.findById(any()))
+      .willReturn(java.util.Optional.of(todoItem));
+    todoItem.setContent(todoItemUpdated.getContent());
+    todoItem.setDone(todoItemUpdated.getDone());
+
+    given(mockTodoListRepository.save(any(TodoItem.class)))
+      .willReturn(todoItem);
+
+    TodoItem actual = todoListService.edit(todoItem.getId(), todoItemUpdated);
+
+    assertEquals(todoItem.getContent(), actual.getContent());
+    assertEquals(todoItem.getDone(), actual.getDone());
+  }
 }
