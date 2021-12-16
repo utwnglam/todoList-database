@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -39,5 +40,25 @@ public class TodoListControllerTest {
       .andExpect(jsonPath("$[0].id").isString())
       .andExpect(jsonPath("$[0].content").value("Do Something"))
       .andExpect(jsonPath("$[0].done").value(false));
+  }
+
+  @Test
+  public void should_create_todo_when_POST_given_new_todo() throws Exception {
+      String todoItemJson = "{\n" +
+        "        \"content\": \"Testing 1\"\n" +
+        "    }";
+
+      mockMvc.perform(MockMvcRequestBuilders.post(TODOLIST_URL_BASE)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(todoItemJson))
+        .andExpect(status().isCreated())
+        .andExpect(jsonPath("$.id").isString())
+        .andExpect(jsonPath("$.content").value("Testing 1"))
+        .andExpect(jsonPath("$.done").value(false));
+  }
+
+  @Test
+  public void should_edit_todo_when_PUT_given_updated_todo() {
+
   }
 }
