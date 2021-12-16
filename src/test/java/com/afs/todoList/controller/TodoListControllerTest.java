@@ -74,4 +74,18 @@ public class TodoListControllerTest {
       .andExpect(jsonPath("$.content").value("Edited"))
       .andExpect(jsonPath("$.done").value(true));
   }
+
+  @Test
+  void should_delete_when_perform_DELETE_given_todo_id() throws Exception {
+    //given
+    TodoItem todoItem = new TodoItem(null, "Do Something", false);
+    todoListRepository.insert(todoItem);
+
+    mockMvc.perform(MockMvcRequestBuilders.delete(TODOLIST_URL_BASE + "/" + todoItem.getId()))
+      .andExpect(status().isNoContent());
+
+    mockMvc.perform(MockMvcRequestBuilders.get(TODOLIST_URL_BASE))
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$",hasSize(0)));
+  }
 }
