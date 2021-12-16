@@ -38,7 +38,7 @@ public class TodoListService {
     }
     return todoListRepository.save(todoItem);
   }
-  
+
   public void delete(String id) {
     todoListRepository.delete(findById(id));
   }
