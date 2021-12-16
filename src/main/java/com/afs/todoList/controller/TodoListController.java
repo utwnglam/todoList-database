@@ -31,5 +31,9 @@ public class TodoListController {
   public TodoItem createTodo(@RequestBody TodoItemRequest todoItemRequest) {
     return todoListService.create(todoListMapper.toEntity(todoItemRequest));
   }
-  
+
+  @PutMapping("/{id}")
+  public TodoItem editTodo(@PathVariable String id, @RequestBody TodoItemRequest todoItemRequest) {
+    return todoListService.edit(id, todoListMapper.toEntity(todoItemRequest));
+  }
 }

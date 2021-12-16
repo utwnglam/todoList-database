@@ -36,11 +36,11 @@ public class TodoItem {
     this.content = content;
   }
 
-  public boolean isDone() {
+  public Boolean getDone() {
     return done;
   }
 
-  public void setDone(boolean done) {
+  public void setDone(Boolean done) {
     this.done = done;
   }
 }
